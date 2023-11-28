@@ -1,11 +1,10 @@
-
 //==============================================================================
 // Welcome to scripting in Origami! Helpful links:
 //
 // Scripting Basics - https://origami.design/documentation/concepts/scriptingbasics
 // Scripting API - https://origami.design/documentation/concepts/scriptingapi
 //
-// Script ID: 2CBD541A-E9FA-487B-9B79-BEB5B8206034
+// Script ID: C6D65E6D-D72B-48B8-A5B5-7FCD65F8C63B
 //==============================================================================
 
 
@@ -19,44 +18,29 @@ patch.alwaysNeedsToEvaluate = false;
 
 // Set Inputs and Outputs.
 patch.inputs = [
-  new PatchInput("Drag", types.POSITION, 0),
-  new PatchInput("Amount", types.NUMBER, 0),
-  new PatchInput("Offset", types.NUMBER, 0),
+  new PatchInput("trigger", types.BOOLEAN, 0),
+  new PatchInput("Position", types.POSITION, 0),
+  new PatchInput("Limit", types.SIZE, 0),
+  new PatchInput("Size", types.SIZE, 0)
 ];
 
 patch.outputs = [
-  new PatchOutput("Array", types.JSON),
-  new PatchOutput("Max scale", types.NUMBER),
+  new PatchOutput("Output", types.POSITION),
 ];
 
 // Add your logic in this function.
 patch.evaluate = function() {
-  let position = patch.inputs[0].value
-  let amount = patch.inputs[1].value
-  let offset = patch.inputs[2].value
+  let trigger = patch.inputs[0].value
+  let pos = patch.inputs[1].value
+  let lim = patch.inputs[2].value
+  let size = patch.inputs[3].value
 
-  let output = Array()
-
-
-  for(var i = 0; i < amount; i++) {
-
-    let offsetX = position.x * i * offset
-    let offsetY = position.y * i * offset
-    output.push({
-      position: {
-        x: offsetX,
-        y: -offsetY
-      },
-      id: i,
-      scale: 1 + i * offset,
-      offset: offset
-    })
+  let output = {
+    "x": 0,
+    "y": pos.y + lim.y / 2 - size.y / 2
   }
-
-  // console.log(output)
+  //console.log(output)
   patch.outputs[0].value = output
-  patch.outputs[1].value = 1 + amount * offset
-
 }
 
-return patch
+return patch;
