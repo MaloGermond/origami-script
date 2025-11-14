@@ -9588,6 +9588,7 @@ Defaulting to 2020, but this will stop working in the future.`)),
                                             );
                                         return new ht(e, r, n - e, s - r);
                                     },
+
                                     include: function () {
                                         var t = q.read(arguments),
                                             e = Math.min(this.x, t.x),
@@ -24365,7 +24366,11 @@ Defaulting to 2020, but this will stop working in the future.`)),
                                         Win: "meta",
                                         Esc: "escape",
                                     },
-                                    e = { tab: "    ", space: " ", enter: "\r" },
+                                    e = {
+                                        tab: "    ",
+                                        space: " ",
+                                        enter: "\r",
+                                    },
                                     r = {},
                                     n = {},
                                     s,
