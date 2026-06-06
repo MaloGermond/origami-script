@@ -24,6 +24,7 @@ patch.inputs = [
 	new PatchInput("Position", types.POSITION),
 	new PatchInput("Size", types.SIZE),
 	new PatchInput("Anchor", types.ANCHOR),
+	new PatchInput("ToAnchor", types.ANCHOR),
 ];
 
 patch.outputs = [new PatchOutput("Convert", types.POSITION)];
@@ -33,8 +34,12 @@ patch.evaluate = function () {
 	const pos = patch.inputs[0].value;
 	const size = patch.inputs[1].value;
 	const anchor = patch.inputs[2].value;
+	const toAnchor = patch.inputs[3].value;
 
-	const output = { x: pos.x + size.x * anchor.x, y: pos.y + size.y * anchor.y };
+	const output = {
+		x: pos.x + size.x * anchor.x - size.x * toAnchor.x,
+		y: pos.y + size.y * anchor.y - size.y * toAnchor.y,
+	};
 	patch.outputs[0].value = output;
 };
 
