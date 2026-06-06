@@ -1,11 +1,8 @@
 // SKSL Shader
 // Standard uniforms:
-//   iResolution = Layer size in pixels (width, height, 0)
+// iResolution = Layer size in pixels (width, height, 0)
 
-
-
-
-uniform float2 origin;      // Center point of the ripple
+uniform float2 origin;       // Center point of the ripple
 uniform float time;          // Elapsed time
 uniform float amplitude;     // Peak wave displacement
 uniform float frequency;     // Wave oscillation rate
