@@ -23,6 +23,7 @@ patch.inputs = [
   new PatchInput("Value max", types.NUMBER, 0),
   new PatchInput("Output min", types.NUMBER, 0),
   new PatchInput("Output max", types.NUMBER, 0),
+  new PatchInput("Limit", types.BOOLEAN, false),
 ];
 
 
@@ -37,22 +38,27 @@ patch.evaluate = function() {
   let vMax = patch.inputs[2].value
   let outMin = patch.inputs[3].value
   let outMax = patch.inputs[4].value
+  let limit = patch.inputs[5].value
 
-  patch.outputs[0].value = map(value, vMin, vMax, outMin, outMax);
+  patch.outputs[0].value = map(value, vMin, vMax, outMin, outMax,limit);
 }
 
 return patch;
 
 
-function map(n, start1, stop1, start2, stop2, withinBounds) {
+function map(n, start1, stop1, start2, stop2, withinBounds = false) {
+  // Calcul de la valeur mappée
   const newval = (n - start1) / (stop1 - start1) * (stop2 - start2) + start2;
-  if(!withinBounds) {
+
+  if (!withinBounds) {
     return newval;
   }
-  if(start2 < stop2) {
-    return this.constrain(newval, start2, stop2);
-  } else {
-    return this.constrain(newval, stop2, start2);
-  }
-};
+
+  // Détermine les bornes min/max pour la plage de sortie
+  const outMin = Math.min(start2, stop2);
+  const outMax = Math.max(start2, stop2);
+
+  // Applique les bornes
+  return Math.min(Math.max(newval, outMin), outMax);
+}
 
